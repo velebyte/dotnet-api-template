@@ -26,7 +26,6 @@ public static class ErrorEndpoint
                 ValidationException ex => Results.ValidationProblem(ex.Errors.ToProblemDetailsValidationDictionary()),
                 NotFoundException ex => Results.Problem(detail: ex.Message, statusCode: StatusCodes.Status404NotFound),
                 DuplicateException ex => Results.Problem(detail: ex.Message, statusCode: StatusCodes.Status409Conflict),
-                InvalidCredentialsException ex => Results.Problem(detail: ex.Message, statusCode: StatusCodes.Status401Unauthorized),
                 UserCreationFailureException ex => Results.Problem(detail: ex.Message),
                 DatabaseException ex => Results.Problem(ex.Message),
                 _ => Results.Problem()

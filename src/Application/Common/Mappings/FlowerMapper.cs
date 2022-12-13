@@ -12,7 +12,7 @@ internal static class FlowerMapper
             flower.Id,
             flower.Name,
             flower.Type,
-            (List<SightingResponse>)flower.Sightings.Select(s => s.Map()));
+            flower.Sightings.Select(s => s.Map()).ToList());
     }
 
     internal static SightingResponse Map(this Sighting sighting)

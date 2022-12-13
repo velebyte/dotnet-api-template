@@ -1,19 +1,16 @@
 ﻿using Domain.FlowerAggregate;
 using Domain.FlowerAggregate.Entities;
 using Infrastructure.Authentication;
-using Duende.IdentityServer.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace Infrastructure.Persistence;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
-        IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions) { }
+        DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Flower> Flowers => Set<Flower>();
     public DbSet<Sighting> Sightings => Set<Sighting>();

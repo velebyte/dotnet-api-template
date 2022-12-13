@@ -13,22 +13,13 @@ var builder = WebApplication
                 .CreateBuilder(args)
                 .ConfigureBuilder();
 
-var app = builder
+var app = await builder
             .Build()
             .ConfigureApplication();
 
-// Healthcheck endpoint
-app.MapHealthChecks("/ping");
-
-// Error endpoint where the integrated
-// exception handling middleware reroutes
-// thrown exception
-app.MapErrorEndpoint();
-
-// Mapping our endpoints
-app.MapAuthenticationEndpoints();
-app.MapFlowersEndpoints();
-
+// Mapping MinimalApi endpoints
+// app.MapAuthenticationEndpoints();
+// app.MapFlowersEndpoints();
 
 try
 {
@@ -45,3 +36,6 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+// Making Program class accessible for testing
+public partial class Program { }

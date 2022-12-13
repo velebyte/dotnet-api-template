@@ -22,17 +22,15 @@ public static class ConfigureServices
         this IServiceCollection services,
         ConfigurationManager configuration)
     {
+        // Setup dbcontext and initializer
+        services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("Dev")));
+
         // Add Auth services
         services.AddAuth(configuration);
 
-        // Setup dbcontext and initializer
-        services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite("Filename=AppDatabase.db",
-                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-        services.AddScoped<ApplicationDbContextInitialiser>();
-
         // Add FlowerRepository
-        services.AddScoped<IFlowerRepository>(provider => provider.GetRequiredService<FlowerRepository>());
+        services.AddScoped<IFlowersRepository, FlowersRepository>();
 
         // Add a DateTime provider
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();

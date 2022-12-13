@@ -1,7 +1,9 @@
 ﻿using Application;
 using Infrastructure;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Web.Endpoints;
 
 namespace Web.Common;
 
@@ -17,40 +19,41 @@ public static class ProgramExtensions
         return builder;
     }
 
-    public static WebApplication ConfigureApplication(this WebApplication app)
+    public static async Task<WebApplication> ConfigureApplication(this WebApplication app)
     {
         app.UseAuthentication();
         app.UseAuthorization();
 
         // Adds middleware for streamlined request logging
         app.UseSerilogRequestLogging(configure =>
-        {
-            configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000} ms";
-        });
+            configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000} ms");
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
+        app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
                                                 $"{app.Environment.ApplicationName} v1"));
 
-            // Initialise database
-            using (var scope = app.Services.CreateScope())
-            {
-                var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-                _ = initialiser.InitialiseAsync();
-            }
-        }
-        else
+        if (app.Environment.IsDevelopment())
         {
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await db.Database.MigrateAsync();
         }
 
         // Redirect HTTP requests to HTTPS
         app.UseHttpsRedirection();
         // Global exception handler
         app.UseExceptionHandler("/error");
+
+        // Map controllers
+        app.MapControllers();
+
+        // Healthcheck endpoint
+        app.MapHealthChecks("/ping");
+
+        // Error endpoint where the integrated
+        // exception handling middleware reroutes
+        // thrown exception
+        app.MapErrorEndpoint();
 
         return app;
     }

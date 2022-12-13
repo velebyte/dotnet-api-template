@@ -21,6 +21,9 @@ mono_crash.*
 *.db-shm
 *.db-wal
 
+# Ignore VS Code REST Client extension requests folder
+[Rr]equests
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

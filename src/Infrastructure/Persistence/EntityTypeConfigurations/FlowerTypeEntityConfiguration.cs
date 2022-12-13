@@ -1,7 +1,6 @@
 ﻿using Domain.FlowerAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data.SQLite;
 
 namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -11,7 +10,6 @@ public class FlowerTypeEntityConfiguration : IEntityTypeConfiguration<Flower>
     {
         builder
             .Property(flower => flower.Name)
-            .UseCollation(CollationTypeEnum.NoCase.ToString())
             .IsRequired();
 
         builder

@@ -3,7 +3,7 @@
 namespace Application.Features.Authentication.LoginUser;
 
 public record LoginUserCommand(
-    string Email, 
+    string Email,
     string Password) : IRequest<AuthenticationResponse>;
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, AuthenticationResponse>

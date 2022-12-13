@@ -9,17 +9,17 @@ public record CreateFlowerCommand(
 
 public class CreateFlowerCommandHandler : IRequestHandler<CreateFlowerCommand, Guid>
 {
-    private readonly IFlowerRepository _repository;
+    private readonly IFlowersRepository _repository;
 
     public CreateFlowerCommandHandler(
-        IFlowerRepository repository)
+        IFlowersRepository repository)
     {
         _repository = repository;
     }
 
     public async Task<Guid> Handle(CreateFlowerCommand request, CancellationToken cancellationToken)
     {
-        var flowerExists = await _repository.GetFlowerBy(flower => flower.Name == request.Name, cancellationToken);
+        var flowerExists = await _repository.GetFlowerByName(request.Name, cancellationToken);
 
         if (flowerExists is not null)
             throw new DuplicateException("Flower");
@@ -29,6 +29,7 @@ public class CreateFlowerCommandHandler : IRequestHandler<CreateFlowerCommand, G
             request.Name,
             request.Type);
 
-        return await _repository.AddAsync(entity, cancellationToken);
+        var flower = await _repository.AddAsync(entity, cancellationToken);
+        return flower.Id;
     }
 }

@@ -7,9 +7,9 @@ public record GetFlowerQuery(Guid Id)
 
 public class GetFlowerQueryHandler : IRequestHandler<GetFlowerQuery, FlowerResponse>
 {
-    private readonly IFlowerRepository _repository;
+    private readonly IFlowersRepository _repository;
 
-    public GetFlowerQueryHandler(IFlowerRepository repository)
+    public GetFlowerQueryHandler(IFlowersRepository repository)
     {
         _repository = repository;
     }
@@ -24,4 +24,3 @@ public class GetFlowerQueryHandler : IRequestHandler<GetFlowerQuery, FlowerRespo
         return flower.Map();
     }
 }
-   

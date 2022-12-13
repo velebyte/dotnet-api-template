@@ -23,8 +23,8 @@ public static class FlowersEndpoints
             {
                 var entityId = await mediator.Send(command);
 
-                return Results.CreatedAtRoute(httpRequest.GetEncodedUrl(), entityId);
-
+                return Results.CreatedAtRoute(UriHelper.GetEncodedUrl(httpRequest), entityId);
+                
             })
             .WithTags("Flowers")
             .WithMetadata(new SwaggerOperationAttribute("Creat a flower", "\n    POST /flowers"))

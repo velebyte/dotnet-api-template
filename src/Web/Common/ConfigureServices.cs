@@ -19,6 +19,8 @@ public static class ConfigureServices
 
         services.AddHealthChecks();
 
+        services.AddControllers();
+
         return services;
     }
 
