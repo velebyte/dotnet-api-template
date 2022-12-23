@@ -8,7 +8,7 @@ var builder = WebApplication
                 .CreateBuilder(args)
                 .ConfigureBuilder();
 
-var app = await builder
+var app = builder
             .Build()
             .ConfigureApplication();
 

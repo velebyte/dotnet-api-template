@@ -17,7 +17,7 @@ public static class ProgramExtensions
         return builder;
     }
 
-    public static async Task<WebApplication> ConfigureApplication(this WebApplication app)
+    public static WebApplication ConfigureApplication(this WebApplication app)
     {
         app.UseAuthentication();
         app.UseAuthorization();
