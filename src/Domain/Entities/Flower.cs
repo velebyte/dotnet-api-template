@@ -1,14 +1,10 @@
-﻿using Domain.FlowerAggregate.Entities;
+﻿namespace Domain.Entities;
 
-namespace Domain.FlowerAggregate;
-
-public sealed class Flower : AggregateRoot<Guid>
+public sealed class Flower : Entity<Guid>
 {
     public string Name { get; private set; }
     public string Type { get; private set; }
-
-    private List<Sighting> _sightings = new();
-    public IReadOnlyList<Sighting> Sightings => _sightings.AsReadOnly();
+    public List<Sighting> Sightings { get; set; }
 
     private Flower(
         Guid id,

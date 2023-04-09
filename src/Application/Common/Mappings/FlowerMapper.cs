@@ -1,6 +1,5 @@
 ﻿using Application.Features.Flowers;
-using Domain.FlowerAggregate;
-using Domain.FlowerAggregate.Entities;
+using Domain.Entities;
 
 namespace Application.Common.Mappings;
 

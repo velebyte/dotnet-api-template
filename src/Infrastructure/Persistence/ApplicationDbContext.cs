@@ -1,5 +1,4 @@
-﻿using Domain.FlowerAggregate;
-using Domain.FlowerAggregate.Entities;
+﻿using Domain.Entities;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

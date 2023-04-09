@@ -1,5 +1,5 @@
 using Application.Common.Interfaces.Persistance;
-using Domain.FlowerAggregate;
+using Domain.Entities;
 
 namespace Application.Features.Flowers.GetFlowers;
 
